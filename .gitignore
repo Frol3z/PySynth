@@ -4,3 +4,5 @@ temp.wav
 wave_visualizer.py
 modulation/*
 !modulation/.gitkeep
+.idea
+__pycache__
