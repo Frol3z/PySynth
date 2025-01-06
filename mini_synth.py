@@ -5,6 +5,8 @@ import numpy as np
 import keyboard
 from enum import Enum
 
+from adsr_envelope import ADSREnvelope
+from modulated_oscillator import ModulatedOscillator
 from sawtooth_oscillator import SawtoothOscillator
 from sine_oscillator import SineOscillator
 from square_oscillator import SquareOscillator
@@ -64,13 +66,30 @@ def get_samples(notes_dict, num_samples=BUFFER_SIZE):
 # Return the requested oscillator
 def get_oscillator(oscillator_type, freq):
     if oscillator_type == OscillatorType.SINE:
-        return iter(SineOscillator(freq=freq))
+        osc = iter(SineOscillator(freq=freq))
     elif oscillator_type == OscillatorType.SQUARE:
-        return iter(SquareOscillator(freq=freq))
+        osc = iter(SquareOscillator(freq=freq))
     elif oscillator_type == OscillatorType.TRIANGLE:
-        return iter(TriangleOscillator(freq=freq))
+        osc = iter(TriangleOscillator(freq=freq))
     elif oscillator_type == OscillatorType.SAWTOOTH:
-        return iter(SawtoothOscillator(freq=freq))
+        osc = iter(SawtoothOscillator(freq=freq))
+
+    # Add modulation
+    adsr_envelope = ADSREnvelope(attack_duration=0.9, decay_duration=0.2, sustain_level=0.7, release_duration=0.0)
+    lfo = SineOscillator(freq=5, wave_range=(0.2, 1))
+    mod_osc = ModulatedOscillator(osc, *(lfo, adsr_envelope), amp_mod=amp_mod)
+    mod_osc = iter(mod_osc)
+
+    return mod_osc
+
+# Amplitude Modulation
+def amp_mod(init_amp, env):
+    return env * init_amp
+
+# Frequency (and Phase) Modulation
+def freq_mod(init_freq, env, mod_amt=1, sustain_level=0.7):
+    # When env is at sustain stage it will play the initial frequency
+    return init_freq + ((env - sustain_level) * init_freq * mod_amt)
 
 # Converts MIDI note to frequency in Hz
 # https://homes.luddy.indiana.edu/donbyrd/Teach/MusicalPitchesTable.htm
@@ -141,7 +160,10 @@ try:
                     notes_dict[key] = get_oscillator(OSCILLATOR_TYPE, freq)
             else:
                 if key in notes_dict:
-                    del notes_dict[key]
+                    if not notes_dict[key].ended:
+                        notes_dict[key].trigger_release()
+                    else:
+                        del notes_dict[key]
 
         # Send notes to the audio stream
         if notes_dict:

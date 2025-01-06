@@ -7,6 +7,7 @@ class ModulatedOscillator:
         self.freq_mod = freq_mod
         self.phase_mod = phase_mod
         self._modulators_count = len(modulators)
+        self._release_triggered = False
 
     def __iter__(self):
         iter(self.oscillator)
@@ -39,12 +40,14 @@ class ModulatedOscillator:
 
     # Trigger release if a modulator is an ADSR envelope
     def trigger_release(self):
-        tr = "trigger_release"
-        for modulator in self.modulators:
-            if hasattr(modulator, tr):
-                modulator.trigger_release()
-        if hasattr(self.oscillator, tr):
-            self.oscillator.trigger_release()
+        if not self._release_triggered:
+            self._release_triggered = True
+            tr = "trigger_release"
+            for modulator in self.modulators:
+                if hasattr(modulator, tr):
+                    modulator.trigger_release()
+            if hasattr(self.oscillator, tr):
+                self.oscillator.trigger_release()
 
     @property
     def ended(self):
