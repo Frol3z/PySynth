@@ -1,4 +1,5 @@
-audio/
 .idea
 __pycache__
 .ipynb_checkpoints
+audio/**/*.wav
+!audio/**/.gitkeep
