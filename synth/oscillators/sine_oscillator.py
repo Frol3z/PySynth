@@ -1,5 +1,5 @@
 import math
-from oscillator import Oscillator
+from synth.oscillators.oscillator import Oscillator
 
 class SineOscillator(Oscillator):
     def _post_freq_set(self):

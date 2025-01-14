@@ -40,14 +40,13 @@ class ModulatedOscillator:
 
     # Trigger release if a modulator is an ADSR envelope
     def trigger_release(self):
-        if not self._release_triggered:
-            self._release_triggered = True
-            tr = "trigger_release"
-            for modulator in self.modulators:
-                if hasattr(modulator, tr):
-                    modulator.trigger_release()
-            if hasattr(self.oscillator, tr):
-                self.oscillator.trigger_release()
+        self._release_triggered = True
+        tr = "trigger_release"
+        for modulator in self.modulators:
+            if hasattr(modulator, tr):
+                modulator.trigger_release()
+        if hasattr(self.oscillator, tr):
+            self.oscillator.trigger_release()
 
     @property
     def ended(self):

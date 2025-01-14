@@ -1,6 +1,6 @@
 import math
 
-from sine_oscillator import SineOscillator
+from synth.oscillators.sine_oscillator import SineOscillator
 
 
 class SquareOscillator(SineOscillator):

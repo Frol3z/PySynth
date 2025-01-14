@@ -1,5 +1,5 @@
 import math
-from sawtooth_oscillator import SawtoothOscillator
+from synth.oscillators.sawtooth_oscillator import SawtoothOscillator
 
 class TriangleOscillator(SawtoothOscillator):
     def __next__(self):

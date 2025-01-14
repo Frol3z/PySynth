@@ -1,8 +1,4 @@
-dft_test.ipynb
-iterators.py
-temp.wav
-wave_visualizer.py
-modulation/*
-!modulation/.gitkeep
+audio/
 .idea
 __pycache__
+.ipynb_checkpoints
