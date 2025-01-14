@@ -6,12 +6,12 @@ PySynth is a real-time playable polyphonic additive synthesizer I made with Pyth
 
 ## Current features
 - 4 oscillators: sine, square, sawtooth and triangle waves
+- ADSR Envelope, LFO modulation
+- Low pass and high pass filters
 - PC keyboard support
 
 ## What's missing?
-- ADSR Envelope
-- Low pass and high pass filters
-- FX (e.g. delay and reverb)
+- other FX (e.g. delay and reverb)
 - MIDI input support
 - GUI
 
