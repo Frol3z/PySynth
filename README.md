@@ -1,6 +1,21 @@
 # PySynth
 PySynth is a real-time playable polyphonic additive synthesizer I made with Python to apply stuff I learned during a DSP course.
 
+## Examples
+
+
+https://github.com/user-attachments/assets/b222f59f-7b2e-4e73-b880-3ce3d9363659
+
+
+
+https://github.com/user-attachments/assets/06ab369e-19fb-40da-935d-aa2a3401b17c
+
+
+
+
+https://github.com/user-attachments/assets/9b3dfca7-44eb-48e0-8038-aa0813d11cce
+
+
 ## How to play it
 *Instructions will be here in the future c:*
 
